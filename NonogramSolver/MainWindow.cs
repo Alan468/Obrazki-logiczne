@@ -17,7 +17,7 @@ namespace NonogramSolver {
         private const int BoxSize = 40;
         // Licznik rozwiązań w bieżącej sesji
         private int SolutionsCounter;
-
+        
         // Konstruktor
         public MainWindow() {
             InitializeComponent();
@@ -106,7 +106,7 @@ namespace NonogramSolver {
                 // Wyłączenie szukania ,zapis obrazu i poinformowanie o znalezieniu rozwiązania
                 ToongleSolvingState(null, null);
                 GamePanelBitmap.Save("Rozwiazanie_" + (SolutionsCounter++) + ".bmp");
-                MessageBox.Show("Znaleziono rozwiązanie!");
+                MessageBox.Show("Znaleziono rozwiązanie!");                
                 return;
             }
             // Wykonanie kolejnego kroku w kombinacji (false jeśli to ostatnia możliwa kombinacja)
