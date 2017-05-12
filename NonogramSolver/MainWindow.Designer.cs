@@ -92,14 +92,14 @@
             this.LoadXMLButton.Name = "LoadXMLButton";
             this.LoadXMLButton.Size = new System.Drawing.Size(194, 22);
             this.LoadXMLButton.Text = "Wczytaj XML";
-            this.LoadXMLButton.Click += new System.EventHandler(this.LoadXMLButton_Click);
+            this.LoadXMLButton.Click += new System.EventHandler(this.LoadXML);
             // 
             // CreateNonogramButton
             // 
             this.CreateNonogramButton.Name = "CreateNonogramButton";
             this.CreateNonogramButton.Size = new System.Drawing.Size(194, 22);
             this.CreateNonogramButton.Text = "Własny obraz";
-            this.CreateNonogramButton.Click += new System.EventHandler(this.CreateNonogramButton_Click);
+            this.CreateNonogramButton.Click += new System.EventHandler(this.CreateNewNonogram);
             // 
             // informacjeToolStripMenuItem
             // 
@@ -114,7 +114,7 @@
             this.AboutProgramButton.Name = "AboutProgramButton";
             this.AboutProgramButton.Size = new System.Drawing.Size(141, 22);
             this.AboutProgramButton.Text = "O programie";
-            this.AboutProgramButton.Click += new System.EventHandler(this.AboutProgramButton_Click);
+            this.AboutProgramButton.Click += new System.EventHandler(this.AboutProgram);
             // 
             // MainWindow
             // 

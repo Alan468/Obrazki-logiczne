@@ -49,74 +49,79 @@ namespace NonoGram {
         private void ReadData() {
             // Gra nie została (jeszcze) wczytana
             NonogramLoaded = false;
-            // Odczyt ilości kolumn i wierszy
-            Width = NonogramXML.DocumentElement.GetElementsByTagName("Column").Count;
-            Height = NonogramXML.DocumentElement.GetElementsByTagName("Row").Count;
+            // Sprawdzenie czy element root xml jest poprawny
+            if (NonogramXML.DocumentElement.Name == "BinLogic") {
+                // Odczyt ilości kolumn i wierszy
+                Width = NonogramXML.DocumentElement.GetElementsByTagName("Column").Count;
+                Height = NonogramXML.DocumentElement.GetElementsByTagName("Row").Count;
 
-            // Stworzenie tablick obrazu dla zadanej wielkości
-            NonogramMatrix = new State[Width, Height];
+                // Stworzenie tablick obrazu dla zadanej wielkości
+                NonogramMatrix = new State[Width, Height];
 
-            // Zainicjalizowanie obazu zerami
-            int y = 0;
-            for (; y < Height; y++) {
-                for (int x = 0; x < Width; x++) {
-                    NonogramMatrix[x, y] = State.Empty;
+                // Zainicjalizowanie obazu zerami
+                int y = 0;
+                for (; y < Height; y++) {
+                    for (int x = 0; x < Width; x++) {
+                        NonogramMatrix[x, y] = State.Empty;
+                    }
                 }
-            }
 
-            y = 0;
-            // Pobranie list wszystkich kolumn z XML
-            XmlNodeList Columns = NonogramXML.DocumentElement.GetElementsByTagName("Column");
-            foreach (XmlNode Value in Columns) {
-                // Podział zawrtości danego pola weług ',' (kolejna grupa)
-                string[] Vals = Regex.Replace(Value.InnerText, "[^0-9,]", "").Split(',');
-                // Zliczanie ilości grup
-                if (Vals.Length > InfoSizeX) InfoSizeX = Vals.Length;
-                // Zapis wartości do listy
-                DataX.Add(new List<int>());
-                foreach (string V in Vals) {
-                    // Jeśli dane pole jest puste albo mniejsze niż 0 wstawia 0 inaczej przepisuje wartość
-                    if (V == null || V.Length <= 0)
-                        DataX[y].Add(0);
-                    else
-                        DataX[y].Add(Int32.Parse(V));
-                    // TODO: if(ilość == height) LockBox/LockEmpty
+                y = 0;
+                // Pobranie list wszystkich kolumn z XML
+                XmlNodeList Columns = NonogramXML.DocumentElement.GetElementsByTagName("Column");
+                foreach (XmlNode Value in Columns) {
+                    // Podział zawrtości danego pola weług ',' (kolejna grupa)
+                    string[] Vals = Regex.Replace(Value.InnerText, "[^0-9,]", "").Split(',');
+                    // Zliczanie ilości grup
+                    if (Vals.Length > InfoSizeX) InfoSizeX = Vals.Length;
+                    // Zapis wartości do listy
+                    DataX.Add(new List<int>());
+                    foreach (string V in Vals) {
+                        // Jeśli dane pole jest puste albo mniejsze niż 0 wstawia 0 inaczej przepisuje wartość
+                        if (V == null || V.Length <= 0)
+                            DataX[y].Add(0);
+                        else
+                            DataX[y].Add(Int32.Parse(V));
+                        // TODO: if(ilość == height) LockBox/LockEmpty
+                    }
+                    y++;
                 }
-                y++;
-            }
 
-            y = 0;
+                y = 0;
 
-            // Pobranie list wszystkich wierszy z XML
-            XmlNodeList Rows = NonogramXML.DocumentElement.GetElementsByTagName("Row");
-            foreach (XmlNode Value in Rows) {
-                // Podział zawrtości danego pola weług ',' (kolejna grupa)
-                string[] Vals = Regex.Replace(Value.InnerText, "[^0-9,]", "").Split(',');
-                // Zliczanie ilości grup
-                if (Vals.Length > InfoSizeY) InfoSizeY = Vals.Length;
-                // Zapis wartości do listy
-                DataY.Add(new List<int>());
-                foreach (string V in Vals) {
-                    // Jeśli dane pole jest puste albo mniejsze niż 0 wstawia 0 inaczej przepisuje wartość
-                    if (V == null || V.Length <= 0)
-                        DataY[y].Add(0);
-                    else
-                        DataY[y].Add(Int32.Parse(V));
-                    // TODO: if(ilość == width) LockBox/LockEmpty
+                // Pobranie list wszystkich wierszy z XML
+                XmlNodeList Rows = NonogramXML.DocumentElement.GetElementsByTagName("Row");
+                foreach (XmlNode Value in Rows) {
+                    // Podział zawrtości danego pola weług ',' (kolejna grupa)
+                    string[] Vals = Regex.Replace(Value.InnerText, "[^0-9,]", "").Split(',');
+                    // Zliczanie ilości grup
+                    if (Vals.Length > InfoSizeY) InfoSizeY = Vals.Length;
+                    // Zapis wartości do listy
+                    DataY.Add(new List<int>());
+                    foreach (string V in Vals) {
+                        // Jeśli dane pole jest puste albo mniejsze niż 0 wstawia 0 inaczej przepisuje wartość
+                        if (V == null || V.Length <= 0)
+                            DataY[y].Add(0);
+                        else
+                            DataY[y].Add(Int32.Parse(V));
+                        // TODO: if(ilość == width) LockBox/LockEmpty
+                    }
+                    y++;
                 }
-                y++;
-            }
 
-            // Wykasowanie pól z wartościami równymi 0
-            for (int i = 0; i < DataY.Count; i++) {
-                DataY[i].RemoveAll(m => m == 0);
-            }
+                // Wykasowanie pól z wartościami równymi 0
+                for (int i = 0; i < DataY.Count; i++) {
+                    DataY[i].RemoveAll(m => m == 0);
+                }
 
-            for (int i = 0; i < DataX.Count; i++) {
-                DataX[i].RemoveAll(m => m == 0);
+                for (int i = 0; i < DataX.Count; i++) {
+                    DataX[i].RemoveAll(m => m == 0);
+                }
+                // Gra została załadowana
+                NonogramLoaded = true;
+            } else {
+                throw new Exception("Plik XML jest uszkodzony");
             }
-            // Gra została załadowana
-            NonogramLoaded = true;
         }
 
         // Wykonanie kolejnego kroku w rozwiązywaniu

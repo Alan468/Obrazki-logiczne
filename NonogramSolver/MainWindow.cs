@@ -17,7 +17,7 @@ namespace NonogramSolver {
         private const int BoxSize = 40;
         // Licznik rozwiązań w bieżącej sesji
         private int SolutionsCounter;
-        
+
         // Konstruktor
         public MainWindow() {
             InitializeComponent();
@@ -106,7 +106,7 @@ namespace NonogramSolver {
                 // Wyłączenie szukania ,zapis obrazu i poinformowanie o znalezieniu rozwiązania
                 ToongleSolvingState(null, null);
                 GamePanelBitmap.Save("Rozwiazanie_" + (SolutionsCounter++) + ".bmp");
-                MessageBox.Show("Znaleziono rozwiązanie!");                
+                MessageBox.Show("Znaleziono rozwiązanie!");
                 return;
             }
             // Wykonanie kolejnego kroku w kombinacji (false jeśli to ostatnia możliwa kombinacja)
@@ -119,7 +119,7 @@ namespace NonogramSolver {
         }
 
         // Wczytanie definicji obrazu z pliku
-        private void LoadXMLButton_Click(object sender, EventArgs e) {
+        private void LoadXML(object sender, EventArgs e) {
             // Otwarcie dialogu wybierania pliku z filtrem dla plików XML
             OpenFileDialog FileDialog = new OpenFileDialog();
             FileDialog.Filter = "XML | *.xml";
@@ -129,16 +129,20 @@ namespace NonogramSolver {
             if (Result == DialogResult.OK && FileDialog.FileName.Remove(0, FileDialog.FileName.Length - 3).ToLower() == "xml") {
                 // Stworzenie nowej gey na podstawi wybranego pliku
                 Game = new Nonogram();
-                Game.LoadNonogramXML(FileDialog.FileName);
+                try {
+                    Game.LoadNonogramXML(FileDialog.FileName);
+                } catch (Exception ex) {
+                    MessageBox.Show("Wystąpił bład podczas wczytywania pliku:\n" + ex.Message);
+                }
                 // Sworzenie bitmapy i odblokowywanie przycisków
                 CreateBitmap();
             }
-
+            //Odświeżenie okna
             UpdateView();
         }
 
         // Tworzenie nowego własnego obrazu
-        private void CreateNonogramButton_Click(object sender, EventArgs e) {
+        private void CreateNewNonogram(object sender, EventArgs e) {
             // Otwarcie okne tworzenia nowego obrazu
             CreateNonogram NewNonogram = new CreateNonogram();
             NewNonogram.ShowDialog();
@@ -147,13 +151,16 @@ namespace NonogramSolver {
             if (NewNonogram.XML != null) {
                 // Stworzenie nowej gry na podstawie informacji użytkownika
                 Game = new Nonogram();
-                Game.LoadNonogramXML(NewNonogram.XML);
+                try {
+                    Game.LoadNonogramXML(NewNonogram.XML);
+                } catch (Exception ex) {
+                    MessageBox.Show("Wystąpił bład podczas wczytywania pliku:\n" + ex.Message);
+                }
                 // Sworzenie bitmapy i odblokowywanie przycisków
                 CreateBitmap();
-                //Odświeżenie okna w celu narysowania aktywnego zadania
-                UpdateView();
             }
-
+            //Odświeżenie okna
+            UpdateView();
         }
 
         // Sworzenie bitmapy dla wybranego xml i odblokowywanie przycisków
@@ -186,7 +193,7 @@ namespace NonogramSolver {
         }
 
         // Otwieranie okna "O programie"
-        private void AboutProgramButton_Click(object sender, EventArgs e) {
+        private void AboutProgram(object sender, EventArgs e) {
             AboutProgram About = new AboutProgram();
             About.ShowDialog();
         }

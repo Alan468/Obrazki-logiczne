@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -58,6 +55,7 @@ namespace NonogramSolver {
         private XmlDocument CreateXML() {
             // Tworzenie buffora dokumentu XML
             XmlDocument XMLDoc = new XmlDocument();
+            string InnerText;
             // Dopisanie nagłówka
             XmlNode docNode = XMLDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
             XMLDoc.AppendChild(docNode);
@@ -75,8 +73,12 @@ namespace NonogramSolver {
                 productsNode.AppendChild(CurrentNode);
                 // Wpisanie grup z kolumny
                 for (int y = 0; y < XLayers; y++) {
-                    if (GridX[x, y].Value != null)
-                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(GridX[x, y].Value.ToString()));
+                    if (GridX[x, y].Value != null) {
+                        InnerText = GridX[x, y].Value.ToString();
+                        InnerText = Regex.Replace(InnerText, "[^0-9,]", ""); // Kasownaie niepoprawnych znaków
+                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(InnerText));
+                    }
+
                     // Oddzielenie przecinkiem 
                     if (y + 1 < XLayers && GridX[x, y + 1].Value != null)
                         if (y < XLayers && GridX[x, y].Value != null)
@@ -92,8 +94,11 @@ namespace NonogramSolver {
                 productsNode.AppendChild(CurrentNode);
                 // Wpisanie grup z wiersza
                 for (int x = 0; x < YLayers; x++) {
-                    if (GridY[x, y].Value != null)
-                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(GridY[x, y].Value.ToString()));
+                    if (GridY[x, y].Value != null) {
+                        InnerText = GridY[x, y].Value.ToString();
+                        InnerText = Regex.Replace(InnerText, "[^0-9,]", "");// Kasownaie niepoprawnych znaków
+                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(InnerText));
+                    }
                     // Oddzielenie przecinkiem 
                     if (x + 1 < YLayers && GridY[x + 1, y].Value != null)
                         if (x < YLayers && GridY[x, y].Value != null)
