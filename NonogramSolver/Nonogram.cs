@@ -161,62 +161,63 @@ namespace NonoGram {
 
         // Sprawdzenie czy aktualny stan pasuje do definicji obrazu
         public bool IsNonogramCorrect() {
+            // Bufor do zliczania grup
             List<List<int>> Counter = new List<List<int>>();
+            // Licznik grupy
+            int CounterOffset = 0;
 
-            int Wym = 0;
-
+            // Liczenie grup na osi X
             for (int y = 0; y < Height; y++) {
                 Counter.Add(new List<int>());
                 for (int x = 0; x < Width; x++) {
-
-                    if (x == 0) {
+                    if (x == 0) 
                         Counter[y].Add(0);
-                    }
-
+                    
                     if (NonogramMatrix[x, y] == State.Box) {
-                        Counter[y][Wym]++;
+                        Counter[y][CounterOffset]++;
                     } else if (NonogramMatrix[x, y] == State.Empty) {
                         Counter[y].Add(0);
-                        Wym++;
+                        CounterOffset++;
                     }
                 }
-                Wym = 0;
+                CounterOffset = 0;
             }
-
+            // Kasowanie pól zawierających 0
             for (int i = 0; i < Counter.Count; i++) {
                 Counter[i].RemoveAll(m => m == 0);
             }
-
+            // Porównywanie grup z aktywnej gry i definicji obrazka
             if (!CompateLists(Counter, DataY)) return false;
 
-            Counter.Clear(); // Cols
+            // Czyszczenie bufora zliczania
+            Counter.Clear();
+            // Wyzerowanie licznika grupy
+            CounterOffset = 0;
 
-            Wym = 0;
-
+            // Liczenie grup na osi Y
             for (int x = 0; x < Width; x++) {
                 Counter.Add(new List<int>());
                 for (int y = 0; y < Height; y++) {
-
-                    if (y == 0) {
+                    if (y == 0) 
                         Counter[x].Add(0);
-                    }
-
+                    
                     if (NonogramMatrix[x, y] == State.Box) {
-                        Counter[x][Wym]++;
+                        Counter[x][CounterOffset]++;
                     } else if (NonogramMatrix[x, y] == State.Empty) {
                         Counter[x].Add(0);
-                        Wym++;
+                        CounterOffset++;
                     }
                 }
-                Wym = 0;
+                CounterOffset = 0;
             }
-
+            // Kasowanie pól zawierających 0
             for (int i = 0; i < Counter.Count; i++) {
                 Counter[i].RemoveAll(m => m == 0);
             }
-
+            // Porównywanie grup z aktywnej gry i definicji obrazka
             if (!CompateLists(Counter, DataX)) return false;
 
+            // Obie osie są identyczne
             return true;
         }
 
