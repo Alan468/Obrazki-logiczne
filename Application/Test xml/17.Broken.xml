@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<BinLogic_Broken>
+  <Columns>3</Columns>
+  <Rows>1</Rows>
+  <Person >
+    <Name>A</Name>
+  </Person>
+  <Row id="0">1,1</Row>
+  <Name >Test</Name>
+  <Row>1,1</Row>
+</BinLogic_Broken>
