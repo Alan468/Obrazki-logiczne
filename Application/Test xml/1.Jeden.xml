@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<BinLogic>
+  <Column id="0">1</Column>
+  <Column id="1">5</Column>
+  <Row id="0">1</Row>
+  <Row id="1">2</Row>
+  <Row id="2">1</Row>
+  <Row id="3">1</Row>
+  <Row id="4">1</Row>
+</BinLogic>

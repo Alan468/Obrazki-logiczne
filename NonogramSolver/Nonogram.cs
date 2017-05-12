@@ -8,7 +8,7 @@ namespace NonoGram {
     public class Nonogram {
 
         // Reprezentacja stanu pojedyńczego pola
-        public enum State { Empty, Box }
+        public enum State { Empty, Box /*,LockEmpty ,LockBox*/}
         // Zmienna pliku XML
         private XmlDocument NonogramXML;
 
@@ -17,7 +17,7 @@ namespace NonoGram {
         public int Height { get; private set; }
         public int InfoSizeX { get; private set; }
         public int InfoSizeY { get; private set; }
-        public bool NonogramLoaded { get; set; }
+        public bool NonogramLoaded { get; private set; }
         // Dane o obrazie
         public List<List<int>> DataX { get; private set; }
         public List<List<int>> DataY { get; private set; }
@@ -80,7 +80,7 @@ namespace NonoGram {
                         DataX[y].Add(0);
                     else
                         DataX[y].Add(Int32.Parse(V));
-                    // TODO: if(ilość == width) LockBox/LockEmpty
+                    // TODO: if(ilość == height) LockBox/LockEmpty
                 }
                 y++;
             }

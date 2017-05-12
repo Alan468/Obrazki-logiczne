@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<BinLogic>
+  <Column id="0">3</Column>
+  <Column id="1">1</Column>
+  <Column id="2">3</Column>
+  <Row id="0">1,1</Row>
+  <Row id="1">3</Row>
+  <Row id="2">1,1</Row>
+</BinLogic>
