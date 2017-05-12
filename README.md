@@ -8,7 +8,7 @@ Aplikacja do rozwiązywania obrazków logicznych (http://pl.wikipedia.org/wiki/O
 
 Dodatkowo:
 + zapis definicji określonej z UI
-
-Ilość kombinacji:
-Każde pole może znajdować w jednym z 2 stanów (puste/pełne).
-Przy obrazku o wysokości H i szerokości W istnieje 2^(HxW) kombinacji.
+<br>
+Ilość kombinacji:<br>
+Każde pole może znajdować w jednym z 2 stanów (puste/pełne).<br>
+Przy obrazku o wysokości H i szerokości W istnieje 2^(HxW) kombinacji.<br>
