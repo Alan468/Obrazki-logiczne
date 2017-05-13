@@ -16,6 +16,7 @@ Przy obrazku o wysokości H i szerokości W istnieje 2^(HxW) kombinacji.<br>
 Metoda BruteForce:<br>
 Badanie każdej możliwej kombicaji do czasu znalezienia poprawnego układu. Najprostrzy i w najgorszym w wypadku (gdy rozwiązaniem jest ostatnia możliwa kombinacja) najwolniejszy. Jeśli rozwiązanie istniej to je znajdzie.<br>
 
+Czas zbadania wszystkich kombinacji dla zadanej ilości pól:
 | Ilość pól  | Ilość kombinacji | Czas (mls) | Czas (sec) |
 | ------------- | ------------- | ------------- | ------------- |
 | 1  | 2 | 10 | 0,01 |
