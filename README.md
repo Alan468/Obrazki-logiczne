@@ -7,7 +7,6 @@ Aplikacja do rozwiązywania obrazków logicznych (http://pl.wikipedia.org/wiki/O
 
 Dodatkowo:
 + zapis definicji określonej z UI do XML
-
 <br>
 Ilość kombinacji:<br>
 Każde pole może znajdować w jednym z 2 stanów (puste/pełne).<br>
@@ -17,6 +16,7 @@ Metoda BruteForce:<br>
 Badanie każdej możliwej kombicaji do czasu znalezienia poprawnego układu. Najprostrzy i w najgorszym w wypadku (gdy rozwiązaniem jest ostatnia możliwa kombinacja) najwolniejszy. Jeśli rozwiązanie istniej to je znajdzie.<br>
 
 Czas zbadania wszystkich kombinacji dla zadanej ilości pól:
+
 | Ilość pól  | Ilość kombinacji | Czas (mls) | Czas (sec) |
 | ------------- | ------------- | ------------- | ------------- |
 | 1  | 2 | 10 | 0,01 |
@@ -32,10 +32,8 @@ Czas zbadania wszystkich kombinacji dla zadanej ilości pól:
 | 15  | 512000 | 512 | 8,53 |
 | 20  | 1048576 | 16384000 | 16384 |
 | 25  | 33554432 | 524288000 | 524288 |
-
 <br>
 Lepsze metody rozwiązywania:<br>
 
 - Algorytmy genetyczne
 - Wykorzystanie grup z jednej z osi
-<br><br>
