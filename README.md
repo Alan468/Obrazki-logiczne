@@ -6,9 +6,9 @@ Aplikacja do rozwiązywania obrazków logicznych (http://pl.wikipedia.org/wiki/O
 - możliwość określenia definicji obrazka z UI.
 
 Dodatkowo:
-+ zapis definicji określonej z UI
++ zapis definicji określonej z UI do XML
 
-<br><br>
+<br>
 Ilość kombinacji:<br>
 Każde pole może znajdować w jednym z 2 stanów (puste/pełne).<br>
 Przy obrazku o wysokości H i szerokości W istnieje 2^(HxW) kombinacji.<br>
