@@ -14,7 +14,7 @@ Każde pole może znajdować w jednym z 2 stanów (puste/pełne).<br>
 Przy obrazku o wysokości H i szerokości W istnieje 2^(HxW) kombinacji.<br>
 <br><br>
 Metoda BruteForce:<br>
-Badanie każdej możliwej kombicaji do czasu znalezienia poprawnego układu. Najprostrzy i w najgorszym w wypadku (gdy rozwiązaniem jest ostatnia możliwa kombinacja) najwolniejszy. Jeśli rozwiązanie istniej to je znajdzie
+Badanie każdej możliwej kombicaji do czasu znalezienia poprawnego układu. Najprostrzy i w najgorszym w wypadku (gdy rozwiązaniem jest ostatnia możliwa kombinacja) najwolniejszy. Jeśli rozwiązanie istniej to je znajdzie.<br>
 
 | Ilość pól  | Ilość kombinacji | Czas (mls) | Czas (sec) |
 | ------------- | ------------- | ------------- | ------------- |
@@ -32,7 +32,7 @@ Badanie każdej możliwej kombicaji do czasu znalezienia poprawnego układu. Naj
 | 20  | 1048576 | 16384000 | 16384 |
 | 25  | 33554432 | 524288000 | 524288 |
 
-<br><br>
+<br>
 Lepsze metody rozwiązywania:<br>
 
 - Algorytmy genetyczne
