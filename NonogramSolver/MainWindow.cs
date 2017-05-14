@@ -199,7 +199,7 @@ namespace NonogramSolver
             NewNonogram.ShowDialog();
 
             //Sprawdzenie czy został stworzony nowy obraz
-            if (NewNonogram.XML != null)
+            if (NewNonogram.XML != null && NewNonogram.NonogramCreated)
             {
                 // Stworzenie nowej gry na podstawie informacji użytkownika
                 Game = new Nonogram();

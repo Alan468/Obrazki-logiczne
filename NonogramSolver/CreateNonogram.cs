@@ -14,6 +14,7 @@ namespace NonogramSolver
         private int XLayers, YLayers;
         // XML z informacjami o obrazie
         public XmlDocument XML { get; private set; }
+        public bool NonogramCreated;
 
         // Konstruktor
         public CreateNonogram()
@@ -24,6 +25,7 @@ namespace NonogramSolver
             XLayers = YLayers = 1;
             GridX.RowCount = GridY.RowCount = 1;
             XML = null;
+            NonogramCreated = false;
         }
 
         // Zamknięcie okna bez tworzenie XML
@@ -108,7 +110,7 @@ namespace NonogramSolver
                     }
                 }
                 // Sprawdzenie czy podane wartości są poprawne - kolumny
-                if (BlocksCounter > GameWidth)
+                if (BlocksCounter > GameHeight)
                 {
                     MessageBox.Show("Wartości w kolumnie " + (1 + x) + " osi X są niepoprawne!");
                     return false;
@@ -144,13 +146,14 @@ namespace NonogramSolver
                     }
                 }
                 // Sprawdzenie czy podane wartości są poprawne - wiersze
-                if (BlocksCounter > GameHeight)
+                if (BlocksCounter > GameWidth)
                 {
                     MessageBox.Show("Wartości w wierszu " + (1 + y) + " osi Y są niepoprawne!");
                     return false;
                 }
                 BlocksCounter = 0;
             }
+            NonogramCreated = true;
             return true;
         }
 
