@@ -74,7 +74,6 @@ namespace NonogramSolver
                     }
                 }
                 // Rysowanie kratek gry
-                // TODO: Only result to bmp ------------------------------------------------------------------------------------------------------------------------------------
                 for (int y = 0; y < Game.Height + Game.InfoSizeX; y++)
                 {
                     for (int x = 0; x < Game.Width + Game.InfoSizeY; x++)

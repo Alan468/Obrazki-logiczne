@@ -94,7 +94,6 @@ namespace NonoGram
                             DataX [y].Add(0);
                         else
                             DataX [y].Add(Int32.Parse(V));
-                        // TODO: if(ilość == height) LockBox/LockEmpty
                     }
                     y++;
                 }
@@ -119,7 +118,6 @@ namespace NonoGram
                             DataY [y].Add(0);
                         else
                             DataY [y].Add(Int32.Parse(V));
-                        // TODO: if(ilość == width) LockBox/LockEmpty
                     }
                     y++;
                 }
