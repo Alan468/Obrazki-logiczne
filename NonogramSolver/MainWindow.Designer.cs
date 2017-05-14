@@ -32,22 +32,26 @@
             this.CreateNonogramButton = new System.Windows.Forms.ToolStripMenuItem();
             this.informacjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProgramButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.Background = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
+            this.Background.SuspendLayout();
             this.SuspendLayout();
             // 
             // GamePanel
             // 
-            this.GamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.GamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GamePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GamePanel.BackColor = System.Drawing.SystemColors.Control;
             this.GamePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.GamePanel.Location = new System.Drawing.Point(12, 27);
+            this.GamePanel.Location = new System.Drawing.Point(3, 3);
             this.GamePanel.Name = "GamePanel";
-            this.GamePanel.Size = new System.Drawing.Size(560, 322);
+            this.GamePanel.Size = new System.Drawing.Size(578, 381);
             this.GamePanel.TabIndex = 0;
             this.GamePanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.WindowUpdate);
+            this.GamePanel.SizeChanged += new System.EventHandler(this.WindowRedraw);
+            this.GamePanel.Resize += new System.EventHandler(this.WindowRedraw);
             // 
             // menuStrip1
             // 
@@ -116,26 +120,34 @@
             this.AboutProgramButton.Text = "O programie";
             this.AboutProgramButton.Click += new System.EventHandler(this.AboutProgram);
             // 
+            // Background
+            // 
+            this.Background.Controls.Add(this.GamePanel);
+            this.Background.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Background.Location = new System.Drawing.Point(0, 24);
+            this.Background.Name = "Background";
+            this.Background.Size = new System.Drawing.Size(584, 387);
+            this.Background.TabIndex = 3;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
-            this.Controls.Add(this.GamePanel);
+            this.ClientSize = new System.Drawing.Size(584, 411);
+            this.Controls.Add(this.Background);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(400, 400);
+            this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "MainWindow";
             this.Text = "Rozwiązywanie obrazków logicznych ";
-            this.Activated += new System.EventHandler(this.WindowUpdate);
-            this.Load += new System.EventHandler(this.WindowUpdate);
             this.DockChanged += new System.EventHandler(this.WindowUpdate);
-            this.Enter += new System.EventHandler(this.WindowUpdate);
-            this.Move += new System.EventHandler(this.WindowUpdate);
-            this.Resize += new System.EventHandler(this.WindowUpdate);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.WindowRedraw);
+            this.Move += new System.EventHandler(this.WindowRedraw);
+            this.Resize += new System.EventHandler(this.WindowRedraw);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.Background.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,6 +164,7 @@
         private System.Windows.Forms.ToolStripMenuItem AboutProgramButton;
         private System.Windows.Forms.ToolStripMenuItem CreateNonogramButton;
         private System.Windows.Forms.ToolStripMenuItem StopSolvingButton;
+        private System.Windows.Forms.Panel Background;
     }
 }
 

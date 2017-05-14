@@ -42,7 +42,7 @@ namespace NonogramSolver {
                 Pen Pen = new Pen(Color.Black, 1);
                 Pen GameBoardPen = new Pen(Color.Black, 2);
                 Brush Boxes = new SolidBrush(Color.Black);
-                Font TextFont = new Font("Arial", 12);
+                Font TextFont = new Font("Arial", 11);
                 // Rysowanie definicji grup na osi X
                 for (int y = 0; y < Game.InfoSizeX; y++) {
                     for (int x = 0; x < Game.Width; x++) {
@@ -84,11 +84,8 @@ namespace NonogramSolver {
                         }
                     }
                 }
-                // Tworzy scroll bar aby można było przewijać większe obrazy
-                GamePanel.AutoScrollMinSize = new Size(((Game.Width + Game.InfoSizeY) * BoxSize) + 1, ((Game.Height + Game.InfoSizeX) * BoxSize) + 1);
-                // Rysuje gre
                 GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
-
+                
                 // Usuwa elementy
                 TextFont.Dispose();
                 Pen.Dispose();
@@ -137,8 +134,6 @@ namespace NonogramSolver {
                 // Sworzenie bitmapy i odblokowywanie przycisków
                 CreateBitmap();
             }
-            //Odświeżenie okna
-            UpdateView();
         }
 
         // Tworzenie nowego własnego obrazu
@@ -159,8 +154,6 @@ namespace NonogramSolver {
                 // Sworzenie bitmapy i odblokowywanie przycisków
                 CreateBitmap();
             }
-            //Odświeżenie okna
-            UpdateView();
         }
 
         // Sworzenie bitmapy dla wybranego xml i odblokowywanie przycisków
@@ -168,11 +161,21 @@ namespace NonogramSolver {
             // Odblokowanie przycisku rozpoczynania rozwiązywania
             StartSolvingButton.Enabled = true;
             // Wyczyszenie okna jeśli znajduje się na nim już jakiś obraz
-            if (GamePanelGraphics != null)
-                UpdateView();
+
+            // Wyczyszczenie okne
+            if (GamePanelGraphics != null) {
+                GamePanelGraphics.Clear(GamePanel.BackColor);
+                GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
+            }
+            // Tworzy scroll bar aby można było przewijać większe obrazy
+            GamePanel.AutoScrollPosition = new Point(0,0);
+            GamePanel.AutoScrollMinSize = new Size(((Game.Width + Game.InfoSizeY) * BoxSize) + 1, ((Game.Height + Game.InfoSizeX) * BoxSize) + 1);
+
             // Stworzenie bitmapy dla aktualnie wybranego przykładu
             GamePanelBitmap = new Bitmap(((Game.Width + Game.InfoSizeY) * BoxSize) + 1, ((Game.Height + Game.InfoSizeX) * BoxSize) + 1);
             GamePanelGraphics = Graphics.FromImage(GamePanelBitmap);
+            //Odświeżenie okna
+            UpdateView();
         }
 
         // Przełączenie stanu rozwiązywania obrazu
@@ -200,9 +203,16 @@ namespace NonogramSolver {
 
         // Odświeżanie okna przy przesówaniu okna
         private void WindowUpdate(object sender, EventArgs e) { UpdateView(); }
-
-        // Odświeżanie okna przy przewijaniu obrazu
+        
+        // Generowanie i rysowanie obrazu w oknie przy przewijaniu
         private void WindowUpdate(object sender, ScrollEventArgs e) { UpdateView(); }
 
+        // Przerysowanie okna przy przesówaniu okna
+        private void WindowRedraw(object sender, EventArgs e) {
+            if (GamePanelGraphics != null) {
+                GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
+            }
+        }
+        
     }
 }
