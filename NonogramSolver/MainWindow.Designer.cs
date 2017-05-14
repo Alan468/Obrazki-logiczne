@@ -50,8 +50,6 @@
             this.GamePanel.Size = new System.Drawing.Size(578, 381);
             this.GamePanel.TabIndex = 0;
             this.GamePanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.WindowUpdate);
-            this.GamePanel.SizeChanged += new System.EventHandler(this.WindowRedraw);
-            this.GamePanel.Resize += new System.EventHandler(this.WindowRedraw);
             // 
             // menuStrip1
             // 
@@ -142,7 +140,6 @@
             this.Name = "MainWindow";
             this.Text = "Rozwiązywanie obrazków logicznych ";
             this.DockChanged += new System.EventHandler(this.WindowUpdate);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.WindowRedraw);
             this.Move += new System.EventHandler(this.WindowRedraw);
             this.Resize += new System.EventHandler(this.WindowRedraw);
             this.menuStrip1.ResumeLayout(false);

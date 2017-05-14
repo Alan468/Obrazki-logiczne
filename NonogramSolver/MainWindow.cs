@@ -15,8 +15,6 @@ namespace NonogramSolver {
         private Timer SolvingInterval;
         // Rozmiar kratki w UI
         private const int BoxSize = 40;
-        // Licznik rozwiązań w bieżącej sesji
-        private int SolutionsCounter;
 
         // Konstruktor
         public MainWindow() {
@@ -24,7 +22,6 @@ namespace NonogramSolver {
             // Wartości początkowe
             Game = new Nonogram();
             Solving = false;
-            SolutionsCounter = 0;
 
             // Stworzenie nowe Timera i przypisanie mu metodi i interwału
             SolvingInterval = new Timer();
@@ -66,6 +63,7 @@ namespace NonogramSolver {
                     }
                 }
                 // Rysowanie kratek gry
+                // TODO: Only result to bmp ------------------------------------------------------------------------------------------------------------------------------------
                 for (int y = 0; y < Game.Height + Game.InfoSizeX; y++) {
                     for (int x = 0; x < Game.Width + Game.InfoSizeY; x++) {
                         // Pominięcie obszaru bez kratek (lewa-góra)
@@ -74,7 +72,7 @@ namespace NonogramSolver {
                             GamePanelGraphics.DrawRectangle((x >= Game.InfoSizeY && y >= Game.InfoSizeX) ? GameBoardPen : Pen,
                             (x * BoxSize) + GamePanel.AutoScrollPosition.X,
                             (y * BoxSize) + GamePanel.AutoScrollPosition.Y, BoxSize, BoxSize);
-                            // Jeśli rysowane są pla gry sprawdza czy są one 'Box'ami i je wypełnia
+                            // Jeśli rysowane są pola gry sprawdza czy są one 'Box'ami i je wypełnia
                             if ((x >= Game.InfoSizeY && y >= Game.InfoSizeX)) {
                                 if (Game.NonogramMatrix[x - Game.InfoSizeY, y - Game.InfoSizeX] == Nonogram.State.Box) {
                                     GamePanelGraphics.FillRectangle(Boxes, (x * BoxSize) + GamePanel.AutoScrollPosition.X,
@@ -85,13 +83,41 @@ namespace NonogramSolver {
                     }
                 }
                 GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
-                
+
                 // Usuwa elementy
                 TextFont.Dispose();
                 Pen.Dispose();
                 Boxes.Dispose();
                 GameBoardPen.Dispose();
             }
+        }
+
+        // Generacja wyniku
+        private void GenerateResultBitmap() {
+            Pen Pen = new Pen(Color.Black, 1);
+            Brush Boxes = new SolidBrush(Color.Black);
+
+            // Wyczyszczenie okna
+            GamePanelGraphics.Clear(GamePanel.BackColor);
+            GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
+
+            // Stworzenie bufora dla obrazu wyjściowego
+            GamePanelBitmap = new Bitmap(Game.Width * BoxSize, Game.Height * BoxSize);
+            GamePanelGraphics = Graphics.FromImage(GamePanelBitmap);
+
+            // Generacja wyniku
+            for (int y = 0; y < Game.Height; y++) {
+                for (int x = 0; x < Game.Width; x++) {
+                    if (Game.NonogramMatrix[x, y] == Nonogram.State.Box) {
+                        GamePanelGraphics.FillRectangle(Boxes, (x * BoxSize),
+                        (y * BoxSize), BoxSize, BoxSize);
+                    }
+                }
+            }
+            // Wyświetlenie wyniku
+            GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
+            Pen.Dispose();
+            Boxes.Dispose();
         }
 
         // Wykonanie kroku w szukaniu rozwiązania
@@ -102,7 +128,10 @@ namespace NonogramSolver {
             if (Game.IsNonogramCorrect()) {
                 // Wyłączenie szukania ,zapis obrazu i poinformowanie o znalezieniu rozwiązania
                 ToongleSolvingState(null, null);
-                GamePanelBitmap.Save("Rozwiazanie_" + (SolutionsCounter++) + ".bmp");
+                // Wygenerowanie wyniku
+                GenerateResultBitmap();
+                // Zapis do bitmapy ( Rozwiązanie Dzień-Miesiąc-Rok Godzina_Minuta_Sekunda )
+                GamePanelBitmap.Save("Rozwiazanie " + DateTime.Now.ToString("dd-MM-yyyy") + " " + DateTime.Now.ToString("HH_mm_ss") + ".bmp");
                 MessageBox.Show("Znaleziono rozwiązanie!");
                 return;
             }
@@ -112,7 +141,6 @@ namespace NonogramSolver {
                 ToongleSolvingState(null, null);
                 MessageBox.Show("Nie znaleziono rozwiązanie!");
             }
-
         }
 
         // Wczytanie definicji obrazu z pliku
@@ -168,7 +196,7 @@ namespace NonogramSolver {
                 GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
             }
             // Tworzy scroll bar aby można było przewijać większe obrazy
-            GamePanel.AutoScrollPosition = new Point(0,0);
+            GamePanel.AutoScrollPosition = new Point(0, 0);
             GamePanel.AutoScrollMinSize = new Size(((Game.Width + Game.InfoSizeY) * BoxSize) + 1, ((Game.Height + Game.InfoSizeX) * BoxSize) + 1);
 
             // Stworzenie bitmapy dla aktualnie wybranego przykładu
@@ -203,7 +231,7 @@ namespace NonogramSolver {
 
         // Odświeżanie okna przy przesówaniu okna
         private void WindowUpdate(object sender, EventArgs e) { UpdateView(); }
-        
+
         // Generowanie i rysowanie obrazu w oknie przy przewijaniu
         private void WindowUpdate(object sender, ScrollEventArgs e) { UpdateView(); }
 
@@ -213,6 +241,5 @@ namespace NonogramSolver {
                 GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
             }
         }
-        
     }
 }
