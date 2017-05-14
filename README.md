@@ -39,3 +39,6 @@ Lepsze metody rozwiązywania:<br>
 
 - Algorytmy genetyczne
 - Wykorzystanie grup z jednej z osi
+
+____________
+Testowane na Windows 8.1Pro
