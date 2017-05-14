@@ -32,10 +32,11 @@ namespace NonogramSolver {
         // Zamknięcie okna (bez zapisu do pliku)
         private void Confirm(object sender, EventArgs e) {
             // Stworzenie i przypisanie XML (stworzonego w pamięci) do zmiennej
-            XML = CreateXML();
-            // Ukrycie i usunięcie okna
-            this.Hide();
-            this.Dispose();
+            if (CreateXML()) {
+                // Ukrycie i usunięcie okna
+                this.Hide();
+                this.Dispose();
+            }
         }
 
         // Zapis XML do pliku
@@ -47,125 +48,144 @@ namespace NonogramSolver {
 
             // Jeśli wybrano poprawny plik zapisuje
             if (Result == DialogResult.OK) {
-                CreateXML().Save(FileDialog.FileName);
+                if (CreateXML()) {
+                    XML.Save(FileDialog.FileName);
+                }
             }
         }
 
         // Tworzenie XML w pamięci
-        private XmlDocument CreateXML() {
-            // Tworzenie buffora dokumentu XML
-            XmlDocument XMLDoc = new XmlDocument();
+        private bool CreateXML() {
             string InnerText;
+            int BlocksCounter = 0;            
+            // Tworzenie buffora dokumentu XML
+            XML = new XmlDocument();
             // Dopisanie nagłówka
-            XmlNode docNode = XMLDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            XMLDoc.AppendChild(docNode);
+            XmlNode docNode = XML.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XML.AppendChild(docNode);
 
             // Stworzenie korzenia dokumentu
-            XmlNode productsNode = XMLDoc.CreateElement("BinLogic");
-            XMLDoc.AppendChild(productsNode);
+            XmlNode productsNode = XML.CreateElement("BinLogic");
+            XML.AppendChild(productsNode);
 
             // Wpisanie definicji kolumn
             for (int x = 0; x < GameWidth; x++) {
-                XmlNode CurrentNode = XMLDoc.CreateElement("Column");
-                XmlAttribute NodeID = XMLDoc.CreateAttribute("id");
+                XmlNode CurrentNode = XML.CreateElement("Column");
+                XmlAttribute NodeID = XML.CreateAttribute("id");
                 NodeID.Value = x.ToString();
                 CurrentNode.Attributes.Append(NodeID);
                 productsNode.AppendChild(CurrentNode);
-                // Wpisanie grup z kolumny
+                // Wpisanie grup z kolumny i wprawdzenie czy ich suma nie jest większa od szerokości obrazu
                 for (int y = 0; y < XLayers; y++) {
-                    if (GridX[x, y].Value != null) {
+                    if (GridX[x, y].Value != null && Int32.Parse(GridX[x, y].Value.ToString()) != 0) {
                         InnerText = GridX[x, y].Value.ToString();
                         InnerText = Regex.Replace(InnerText, "[^0-9,]", ""); // Kasownaie niepoprawnych znaków
-                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(InnerText));
+                        CurrentNode.AppendChild(XML.CreateTextNode(InnerText));
+                        BlocksCounter += Int32.Parse(InnerText);
                     }
 
                     // Oddzielenie przecinkiem 
-                    if (y + 1 < XLayers && GridX[x, y + 1].Value != null)
-                        if (y < XLayers && GridX[x, y].Value != null)
-                            CurrentNode.AppendChild(XMLDoc.CreateTextNode(","));
+                    if (y + 1 < XLayers && GridX[x, y + 1].Value != null) {
+                        if (y < XLayers && GridX[x, y].Value != null) {
+                            CurrentNode.AppendChild(XML.CreateTextNode(","));
+                            BlocksCounter++;
+                        }
+                    }
                 }
+                // Sprawdzenie czy podane wartości są poprawne - kolumny
+                if (BlocksCounter > GameWidth) {
+                    MessageBox.Show("Wartości w kolumnie " + (1+x) + " osi X są niepoprawne!");
+                    return false;
+                }
+                BlocksCounter = 0;
             }
             // Wpisanie definicji kolumn
             for (int y = 0; y < GameHeight; y++) {
-                XmlNode CurrentNode = XMLDoc.CreateElement("Row");
-                XmlAttribute NodeID = XMLDoc.CreateAttribute("id");
+                XmlNode CurrentNode = XML.CreateElement("Row");
+                XmlAttribute NodeID = XML.CreateAttribute("id");
                 NodeID.Value = y.ToString();
                 CurrentNode.Attributes.Append(NodeID);
                 productsNode.AppendChild(CurrentNode);
                 // Wpisanie grup z wiersza
                 for (int x = 0; x < YLayers; x++) {
-                    if (GridY[x, y].Value != null) {
+                    if (GridY[x, y].Value != null && Int32.Parse(GridY[x, y].Value.ToString()) != 0) {
                         InnerText = GridY[x, y].Value.ToString();
                         InnerText = Regex.Replace(InnerText, "[^0-9,]", "");// Kasownaie niepoprawnych znaków
-                        CurrentNode.AppendChild(XMLDoc.CreateTextNode(InnerText));
+                        CurrentNode.AppendChild(XML.CreateTextNode(InnerText));
+                        BlocksCounter += Int32.Parse(InnerText);
                     }
                     // Oddzielenie przecinkiem 
-                    if (x + 1 < YLayers && GridY[x + 1, y].Value != null)
-                        if (x < YLayers && GridY[x, y].Value != null)
-                            CurrentNode.AppendChild(XMLDoc.CreateTextNode(","));
+                    if (x + 1 < YLayers && GridY[x + 1, y].Value != null) {
+                        if (x < YLayers && GridY[x, y].Value != null) {
+                            CurrentNode.AppendChild(XML.CreateTextNode(","));
+                            BlocksCounter++;
+                        }
+                    }
                 }
+                // Sprawdzenie czy podane wartości są poprawne - wiersze
+                if (BlocksCounter > GameHeight) {
+                    MessageBox.Show("Wartości w wierszu " + (1+y) + " osi Y są niepoprawne!");
+                    return false;
+                }
+                BlocksCounter = 0;
             }
-            return XMLDoc;
+            return true;
         }
 
         // Dodanie nowej warstwy dla osi X
-        private void AddXLayer(object sender, EventArgs e) {
-            NumericUpDown Sender = (NumericUpDown)sender;
-
+        private void ChangeXLayers(object sender, EventArgs e) {
             // Przypisanie nowej warstwy jeśli jest wieksza niż 0
-            if (Sender.Value > 0) {
+            if (XLayersUpDown.Value > 0) {
                 // Blokada przekroszenia wilkości obrazu
-                if (Sender.Value <= GameHeight) {
-                    GridX.RowCount = XLayers = (int)Sender.Value;
+                if (XLayersUpDown.Value <= GameHeight) {
+                    GridX.RowCount = XLayers = (int)XLayersUpDown.Value;
                 } else
-                    Sender.Value = GameHeight;
+                    XLayersUpDown.Value = GameHeight;
             } else {
-                ((NumericUpDown)sender).Value = 1;
+                XLayersUpDown.Value = 1;
             }
         }
 
         // Dodanie nowej warstwy dla osi Y
-        private void AddYLayer(object sender, EventArgs e) {
-            NumericUpDown Sender = (NumericUpDown)sender;
-
+        private void ChangeYLayers(object sender, EventArgs e) {
             // Przypisanie nowej warstwy jeśli jest wieksza niż 0
-            if (Sender.Value > 0) {
+            if (YLayersUpDown.Value > 0) {
                 // Blokada przekroszenia wilkości obrazu
-                if (Sender.Value <= GameWidth) {
-                    YLayers = GridY.ColumnCount = (int)Sender.Value;
+                if (YLayersUpDown.Value <= GameWidth) {
+                    YLayers = GridY.ColumnCount = (int)YLayersUpDown.Value;
                     // Ustawnienie szerokości kolumny na 50
                     GridY.Columns[GridY.ColumnCount - 1].Width = 50;
                 } else
-                    Sender.Value = GameWidth;
+                    YLayersUpDown.Value = GameWidth;
             } else {
-                ((NumericUpDown)sender).Value = 1;
+                YLayersUpDown.Value = 1;
             }
         }
 
         // Zmiana szerokości obrazu
         private void WidthChange(object sender, EventArgs e) {
-            NumericUpDown Sender = (NumericUpDown)sender;
-
             // Przypisanie nowej szerokości jeśli jest wieksza niż 0
-            if (Sender.Value > 0) {
-                GameWidth = GridX.ColumnCount = (int)Sender.Value;
+            if (WidthUpDown.Value > 0) {
+                GameWidth = GridX.ColumnCount = (int)WidthUpDown.Value;
                 // Ustawnienie szerokości kolumny na 50
                 GridX.Columns[GridX.ColumnCount - 1].Width = 50;
             } else {
-                Sender.Value = 1;
+                WidthUpDown.Value = 1;
             }
+            // Zmiana warstwy jeśli była ona równa szerokości
+            ChangeYLayers(null, null);
         }
 
         // Zmiana wysokości obrazu
         private void HeightChange(object sender, EventArgs e) {
-            NumericUpDown Sender = (NumericUpDown)sender;
-
             // Przypisanie nowej wysokości jeśli jest wieksza niż 0
-            if (Sender.Value > 0) {
-                GameHeight = GridY.RowCount = (int)Sender.Value;
+            if (HeightUpDown.Value > 0) {
+                GameHeight = GridY.RowCount = (int)HeightUpDown.Value;
             } else {
-                Sender.Value = 1;
+                HeightUpDown.Value = 1;
             }
+            // Zmiana warstwy jeśli była ona równa wysokości
+            ChangeXLayers(null, null);
         }
     }
 }

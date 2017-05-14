@@ -27,12 +27,12 @@
             this.SaveGameToXMLButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.YLayersUpDown = new System.Windows.Forms.NumericUpDown();
+            this.XLayersUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.HeightUpDown = new System.Windows.Forms.NumericUpDown();
+            this.WidthUpDown = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,10 +42,10 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CancelGameButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YLayersUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XLayersUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridY)).BeginInit();
             this.SuspendLayout();
@@ -79,12 +79,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.numericUpDown3);
-            this.panel1.Controls.Add(this.numericUpDown4);
+            this.panel1.Controls.Add(this.YLayersUpDown);
+            this.panel1.Controls.Add(this.XLayersUpDown);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.numericUpDown2);
-            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.HeightUpDown);
+            this.panel1.Controls.Add(this.WidthUpDown);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
@@ -104,31 +104,31 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "x";
             // 
-            // numericUpDown3
+            // YLayersUpDown
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(91, 86);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDown3.TabIndex = 12;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.YLayersUpDown.Location = new System.Drawing.Point(91, 86);
+            this.YLayersUpDown.Name = "YLayersUpDown";
+            this.YLayersUpDown.Size = new System.Drawing.Size(63, 20);
+            this.YLayersUpDown.TabIndex = 12;
+            this.YLayersUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown3.ValueChanged += new System.EventHandler(this.AddYLayer);
+            this.YLayersUpDown.ValueChanged += new System.EventHandler(this.ChangeYLayers);
             // 
-            // numericUpDown4
+            // XLayersUpDown
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(4, 86);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDown4.TabIndex = 11;
-            this.numericUpDown4.Value = new decimal(new int[] {
+            this.XLayersUpDown.Location = new System.Drawing.Point(4, 86);
+            this.XLayersUpDown.Name = "XLayersUpDown";
+            this.XLayersUpDown.Size = new System.Drawing.Size(63, 20);
+            this.XLayersUpDown.TabIndex = 11;
+            this.XLayersUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown4.ValueChanged += new System.EventHandler(this.AddXLayer);
+            this.XLayersUpDown.ValueChanged += new System.EventHandler(this.ChangeXLayers);
             // 
             // label4
             // 
@@ -148,31 +148,31 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "x";
             // 
-            // numericUpDown2
+            // HeightUpDown
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(91, 34);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDown2.TabIndex = 8;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.HeightUpDown.Location = new System.Drawing.Point(91, 34);
+            this.HeightUpDown.Name = "HeightUpDown";
+            this.HeightUpDown.Size = new System.Drawing.Size(63, 20);
+            this.HeightUpDown.TabIndex = 8;
+            this.HeightUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown2.ValueChanged += new System.EventHandler(this.HeightChange);
+            this.HeightUpDown.ValueChanged += new System.EventHandler(this.HeightChange);
             // 
-            // numericUpDown1
+            // WidthUpDown
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(4, 34);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDown1.TabIndex = 7;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.WidthUpDown.Location = new System.Drawing.Point(4, 34);
+            this.WidthUpDown.Name = "WidthUpDown";
+            this.WidthUpDown.Size = new System.Drawing.Size(63, 20);
+            this.WidthUpDown.TabIndex = 7;
+            this.WidthUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.WidthChange);
+            this.WidthUpDown.ValueChanged += new System.EventHandler(this.WidthChange);
             // 
             // label5
             // 
@@ -267,10 +267,10 @@
             this.Text = "CreateNonogram";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YLayersUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XLayersUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridY)).EndInit();
             this.ResumeLayout(false);
@@ -288,12 +288,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown HeightUpDown;
+        private System.Windows.Forms.NumericUpDown WidthUpDown;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.NumericUpDown YLayersUpDown;
+        private System.Windows.Forms.NumericUpDown XLayersUpDown;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
