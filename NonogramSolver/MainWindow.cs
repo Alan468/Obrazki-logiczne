@@ -110,8 +110,8 @@ namespace NonogramSolver
         // Generacja wyniku
         private void GenerateResultBitmap()
         {
-            Pen Pen = new Pen(Color.Black, 1);
-            Brush Boxes = new SolidBrush(Color.Black);
+            Brush BlackBoxes = new SolidBrush(Color.Black);
+            Brush WhiteBoxes = new SolidBrush(Color.White);
 
             // Wyczyszczenie okna
             GamePanelGraphics.Clear(GamePanel.BackColor);
@@ -126,17 +126,16 @@ namespace NonogramSolver
             {
                 for (int x = 0; x < Game.Width; x++)
                 {
-                    if (Game.NonogramMatrix [x, y] == Nonogram.State.Box)
-                    {
-                        GamePanelGraphics.FillRectangle(Boxes, (x * BoxSize),
-                        (y * BoxSize), BoxSize, BoxSize);
-                    }
+                    GamePanelGraphics.FillRectangle(
+                        (Game.NonogramMatrix [x, y] == Nonogram.State.Box) ? BlackBoxes : WhiteBoxes,
+                        (x * BoxSize),(y * BoxSize), BoxSize, BoxSize);
+
                 }
             }
             // Wyświetlenie wyniku
             GamePanel.CreateGraphics().DrawImage(GamePanelBitmap, 0, 0);
-            Pen.Dispose();
-            Boxes.Dispose();
+            BlackBoxes.Dispose();
+            WhiteBoxes.Dispose();
         }
 
         // Wykonanie kroku w szukaniu rozwiązania
